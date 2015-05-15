@@ -1,0 +1,30 @@
+/**
+ * Created by Jiazhang_Liu on 5/15/2015.
+ */
+
+//Assume you have a method isSubstring which checks if one word is a substring
+//of another. Given two strings, si and s2, write code to check Ifs2 is a rotation of si
+//using only one call to isSubstring
+
+public class IsRotation {
+
+    public boolean isRotation (String s1, String s2) {
+        if(s1 == null || s2 == null) return false;
+        if(s1.length() != s2.length()) return false;
+
+        return isSubstring(s1+s1, s2);
+    }
+
+    public boolean isSubstring(String s1, String s2) {
+        return s1.contains(s2) || s2.contains(s1);
+    }
+
+    public static void main(String args[]) {
+        IsRotation ir = new IsRotation();
+
+        String s1 = "waterfall";
+        String s2 = "fallwater";
+
+        System.err.println(ir.isRotation(s1, s2));
+    }
+}
