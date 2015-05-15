@@ -1,0 +1,51 @@
+/**
+ * Created by Jiazhang_Liu on 5/15/2015.
+ */
+
+//Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column are set to 0.
+public class SetZeros {
+
+    public void setZeros(int[][] input) {
+        if(input == null || input.length == 0 || input[0].length == 0) {
+            return;
+        }
+
+        int[] row = new int[input.length];
+        int[] col = new int[input[0].length];
+
+        for(int i = 0; i < input.length; i++) {
+            for(int j = 0; j < input[0].length; j++) {
+                if(input[i][j] == 0) {
+                    row[i] = 1;
+                    col[j] = 1;
+                }
+            }
+        }
+
+        for(int i = 0; i < input.length; i++) {
+            for(int j = 0; j < input[0].length; j++) {
+                if(row[i] == 1 || col[j] == 1) {
+                    input[i][j] = 0;
+                }
+            }
+        }
+    }
+
+    public void display(int[][] input) {
+        for(int i = 0; i < input.length; i++) {
+            for(int j = 0; j < input[0].length; j++) {
+                System.err.print(input[i][j] + " ");
+            }
+            System.err.println();
+        }
+    }
+
+    public static void main(String args[]) {
+        SetZeros sz = new SetZeros();
+
+        int[][] input = {{1,2,3},{4,5,6},{7,8,9}};
+        sz.display(input);
+        sz.setZeros(input);
+        sz.display(input);
+    }
+}
