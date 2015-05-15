@@ -1,0 +1,52 @@
+/**
+ * Created by Jiazhang_Liu on 5/15/2015.
+ */
+
+// Write a method to replace all spaces in a string with '%20'. You may assume that the
+// string has sufficient space at the end of the string to hold the additional characters,
+// and that you are given the "true" length of the string
+
+public class ReplaceSpaceWith {
+
+    public String replaceSpaceWith(char[] input, int length) {
+        if(input == null || input.length == 0) return new String(input);
+
+        int nonSpace = 0;
+        for(int i = 0; i < length; i++) {
+            if(input[i] != ' ') {
+                nonSpace++;
+            }
+        }
+
+        int endIndex = (length - nonSpace) * 3 + nonSpace - 1;
+
+        for(int i = length-1; i >= 0; i--) {
+            if(input[i] == ' ') {
+                input[endIndex] = '0';
+                input[endIndex-1] = '2';
+                input[endIndex-2] = '%';
+                endIndex -= 3;
+            } else {
+                input[endIndex--] = input[i];
+            }
+        }
+
+        return new String(input);
+    }
+
+    public static void main(String args[]) {
+        ReplaceSpaceWith rsw = new ReplaceSpaceWith();
+
+        char[] input = new char[30];
+        input[0] = ' ';
+        input[1] = 'a';
+        input[2] = 'b';
+        input[3] = ' ';
+        input[4] = ' ';
+        input[5] = 'c';
+        input[6] = ' ';
+        input[7] = ' ';
+
+        System.err.println(new String(input) + ": " + rsw.replaceSpaceWith(input, 8));
+    }
+}
