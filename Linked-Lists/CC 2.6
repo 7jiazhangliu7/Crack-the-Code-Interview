@@ -1,0 +1,68 @@
+/**
+ * Created by Jiazhang_Liu on 5/18/2015.
+ */
+public class BeginningOfLoop {
+
+    public ListNode findLoopBeginning(ListNode head) {
+        if(head == null || head.next == null) return head;
+
+        ListNode fast = head, slow = head;
+
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if(fast == slow) {
+                fast = head;
+                break;
+            }
+        }
+
+        // check if there is cycle
+        if(fast ==null || fast.next == null) return null;
+
+        while(fast != slow) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        return fast;
+    }
+
+    public static void main(String args[]) {
+        BeginningOfLoop k = new BeginningOfLoop();
+
+        ListNode head = new ListNode(1);
+        ListNode n1 = new ListNode(2);
+        ListNode n2 = new ListNode(3);
+        ListNode n3 = new ListNode(4);
+        ListNode n4 = new ListNode(5);
+
+        head.next = n1;
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        n4.next = n1;
+
+        ListNode node = k.findLoopBeginning(head);
+        System.err.println(node.val);
+    }
+
+    public void display(ListNode head) {
+        while(head != null) {
+            System.err.print(head.val + " ");
+            head = head.next;
+        }
+
+        System.err.println();
+    }
+
+    private static class ListNode {
+        int val;
+        ListNode next;
+
+        public ListNode(int val) {
+            this.val = val;
+        }
+    }
+}
