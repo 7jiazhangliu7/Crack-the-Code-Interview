@@ -1,0 +1,73 @@
+/**
+ * Created by Jiazhang_Liu on 5/18/2015.
+ */
+
+//Write code to partition a linked list around a value x, such that all nodes less than x
+//come before alt nodes greater than or equal to x
+
+public class PartitionList {
+
+    public ListNode partition (ListNode head, int val) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode small = new ListNode(Integer.MIN_VALUE);
+        ListNode large = new ListNode(Integer.MAX_VALUE);
+
+        ListNode s = small, l = large;
+
+        while(head != null) {
+            if(head.val < val) {
+                s.next = head;
+                s = s.next;
+            } else {
+                l.next = head;
+                l = l.next;
+            }
+            head = head.next;
+        }
+
+        s.next = large.next;
+        l.next = null;
+
+        return small.next;
+    }
+
+    public static void main(String args[]) {
+        PartitionList k = new PartitionList();
+
+        ListNode head = new ListNode(5);
+        ListNode n1 = new ListNode(4);
+        ListNode n2 = new ListNode(3);
+        ListNode n3 = new ListNode(2);
+        ListNode n4 = new ListNode(1);
+
+        head.next = n1;
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+
+        k.display(head);
+        head = k.partition(head, 3);
+        k.display(head);
+    }
+
+    public void display(ListNode head) {
+        while(head != null) {
+            System.err.print(head.val + " ");
+            head = head.next;
+        }
+
+        System.err.println();
+    }
+
+    private static class ListNode {
+        int val;
+        ListNode next;
+
+        public ListNode(int val) {
+            this.val = val;
+        }
+    }
+}
