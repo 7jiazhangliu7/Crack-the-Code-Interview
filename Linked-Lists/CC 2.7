@@ -1,0 +1,125 @@
+import java.util.Stack;
+
+/**
+ * Created by Jiazhang_Liu on 5/18/2015.
+ */
+//Implement a function to check if a linked list is a palindrome
+
+public class IsPalindrome {
+
+    public boolean isPalindromeReverse(ListNode head) {
+        if(head == null) return false;
+        if(head.next == null) return true;
+        ListNode tmp = head;
+
+        ListNode dummy = new ListNode(Integer.MIN_VALUE);
+        ListNode cur = dummy;
+        while(head != null) {
+            cur.next = new ListNode(head.val);
+            cur = cur.next;
+            head = head.next;
+        }
+        ListNode newHead = reverse(dummy.next);
+        head = tmp;
+        while(head != null && newHead != null) {
+            if(head.val != newHead.val) return false;
+            head = head.next;
+            newHead = newHead.next;
+        }
+
+        return true;
+    }
+
+    public ListNode reverse(ListNode head) {
+        ListNode pre = null;
+        while(head != null) {
+            ListNode tmp = head.next;
+            head.next = pre;
+            pre = head;
+            head = tmp;
+        }
+
+        return pre;
+    }
+    public boolean isPalindromeStack(ListNode head) {
+        if(head == null) return false;
+        if(head.next == null) return true;
+
+        Stack<Integer> s = new Stack<Integer>();
+        ListNode tmp = head;
+        int size = size(head);
+        head = tmp;
+        int i = 0;
+
+        while(i < size/2) {
+            s.push(head.val);
+            head = head.next;
+            i++;
+        }
+        i--;
+        if(size%2 == 1) {
+            head = head.next;
+        }
+        while(i >= 0) {
+            int val = s.pop();
+            if(val != head.val) {
+                return false;
+            }
+            i--;
+            head = head.next;
+        }
+
+        return true;
+    }
+
+    public int size(ListNode head) {
+        int counter = 0;
+        while(head != null) {
+            counter++;
+            head = head.next;
+        }
+        return counter;
+    }
+
+    public static void main(String args[]) {
+        IsPalindrome k = new IsPalindrome();
+
+        ListNode head = new ListNode(5);
+        ListNode n1 = new ListNode(4);
+        ListNode n2 = new ListNode(4);
+        ListNode n3 = new ListNode(4);
+        ListNode n4 = new ListNode(5);
+
+        head.next = n1;
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+
+        System.err.println(k.isPalindromeReverse(head));
+
+        head.next = n1;
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+
+        System.err.println(k.isPalindromeStack(head));
+    }
+
+    public void display(ListNode head) {
+        while(head != null) {
+            System.err.print(head.val + " ");
+            head = head.next;
+        }
+
+        System.err.println();
+    }
+
+    private static class ListNode {
+        int val;
+        ListNode next;
+
+        public ListNode(int val) {
+            this.val = val;
+        }
+    }
+}
