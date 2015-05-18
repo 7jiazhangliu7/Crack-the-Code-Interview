@@ -1,0 +1,75 @@
+/**
+ * Created by Jiazhang_Liu on 5/18/2015.
+ */
+
+//Implement an algorithm to find the kth to last element of a singly linked list.
+
+public class KthToLast {
+    public ListNode KthToLast(ListNode head, int k) {
+        if (head == null) {
+            return head;
+        }
+
+        int length = findLength(head);
+
+        int start = 0;
+        if(k >= length) {
+            return head;
+        } else {
+            while(start < length-k) {
+                head = head.next;
+                start++;
+            }
+        }
+
+        return head;
+    }
+
+    public int findLength(ListNode head){
+        int length = 0;
+
+        while(head != null) {
+            length++;
+            head = head.next;
+        }
+
+        return length;
+    }
+
+    public static void main(String args[]) {
+        KthToLast k = new KthToLast();
+
+        ListNode head = new ListNode(1);
+        ListNode n1 = new ListNode(2);
+        ListNode n2 = new ListNode(3);
+        ListNode n3 = new ListNode(4);
+        ListNode n4 = new ListNode(5);
+
+        head.next = n1;
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+
+        k.display(head);
+        System.err.println("3 th from last: " + k.KthToLast(head, 1).val);
+
+    }
+
+    public void display(ListNode head) {
+        while(head != null) {
+            System.err.print(head.val + " ");
+            head = head.next;
+        }
+
+        System.err.println();
+    }
+
+    private static class ListNode {
+        int val;
+        ListNode next;
+
+        public ListNode(int val) {
+            this.val = val;
+        }
+    }
+}
