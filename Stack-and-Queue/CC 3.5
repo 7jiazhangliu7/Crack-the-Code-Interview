@@ -1,0 +1,60 @@
+/**
+ * Created by Jiazhang_Liu on 5/14/2015.
+ */
+
+import java.util.Stack;
+import java.util.Enumeration;
+
+public class Main <T> {
+    Stack<T> stack1 = new Stack<T>();
+    Stack<T> stack2 = new Stack<T>();
+
+    public static void main(String args[]) {
+        Main m = new Main();
+
+        m.enQueue(1);
+        m.enQueue(2);
+        m.enQueue(3);
+        m.enQueue(4);
+        m.enQueue(5);
+        m.enQueue(6);
+
+        m.deQueue();
+        m.deQueue();
+        m.deQueue();
+        m.deQueue();
+        m.deQueue();
+        m.deQueue();
+    }
+
+    public void enQueue(T input) {
+
+        stack1.push(input);
+        display(stack1);
+    }
+
+    public T deQueue() {
+        int i = 0;
+        while(i < stack1.size()-1) {
+            stack2.push(stack1.pop());
+        }
+
+        T result = stack1.pop();
+
+        while(!stack2.isEmpty()) {
+            stack1.push(stack2.pop());
+        }
+        display(stack1);
+        return result;
+    }
+
+    public void display(Stack<T> stack) {
+        Enumeration e = stack.elements();
+
+        while(e.hasMoreElements()) {
+            System.err.println(e.nextElement());
+        }
+        System.err.println();
+    }
+
+}
