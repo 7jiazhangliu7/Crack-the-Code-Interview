@@ -1,0 +1,78 @@
+import java.util.LinkedList;
+import java.util.Stack;
+
+/**
+ * Created by Jiazhang_Liu on 5/19/2015.
+ */
+
+//Imagine a (literal) stack of plates
+
+public class StackOfPlates {
+
+    public static void main(String args[]) {
+        SetOfStacks s = new SetOfStacks(3);
+        s.push(1); s.push(2); s.push(3); s.push(4);
+        s.push(1); s.push(2); s.push(3); s.push(4);
+        s.push(1); s.push(2); s.push(3); s.push(4);
+        s.display();
+        s.pop();s.pop();
+        s.display();
+        s.pop();s.pop();s.pop();
+        s.display();
+        s.pop();s.pop();s.pop();s.pop();
+        s.display();
+        s.pop();s.pop();s.pop();s.pop();
+        s.display();
+    }
+
+    static class SetOfStacks {
+        int capacity;
+        int curIndex;
+        LinkedList<Stack<Integer>> list;
+        SetOfStacks(int capacity) {
+            if(capacity <= 0) return;
+            this.capacity = capacity;
+            curIndex = 0;
+            list = new LinkedList<Stack<Integer>>();
+            list.add(new Stack<Integer>());
+        }
+
+        public void push(int val) {
+            if(curIndex == capacity) {
+                Stack<Integer> stack = new Stack<Integer>();
+                stack.push(val);
+                curIndex = 1;
+                list.add(stack);
+            } else {
+                list.get(list.size()-1).push(val);
+                curIndex++;
+            }
+        }
+
+        public int pop() {
+            int result = 0;
+            //记得检查stack是否已经空了！！
+            if(list.size() == 0) return result;
+            
+            if(curIndex == capacity) {
+                result = list.get(list.size()-1).pop();
+                curIndex--;
+            } else if (curIndex == 1) {
+                result = list.get(list.size()-1).pop();
+                curIndex = capacity;
+                list.remove(list.size()-1);
+            } else {
+                result = list.get(list.size()-1).pop();
+                curIndex--;
+            }
+            return result;
+        }
+
+        public void display() {
+            for(Stack<Integer> s : list) {
+                System.err.print(s + " ");
+            }
+            System.err.println();
+        }
+    }
+}
