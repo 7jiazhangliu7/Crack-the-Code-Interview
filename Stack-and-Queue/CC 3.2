@@ -1,0 +1,51 @@
+import java.util.Stack;
+
+/**
+ * Created by Jiazhang_Liu on 5/19/2015.
+ */
+
+//How would you design a stack which, in addition to push and pop, also has a
+//function min which returns the minimum element? Push, pop and min should all
+//operate in 0(1) time.
+
+public class PushPopAndMin {
+    Stack<Integer> minStack = new Stack<Integer>();
+    Stack<Integer> regularStack = new Stack<Integer>();
+    int min = Integer.MAX_VALUE;
+
+    public void push(int val) {
+        if(val < min) {
+            minStack.push(min);
+            min = val;
+        }
+        regularStack.push(val);
+    }
+
+    public int pop() {
+        if(regularStack.isEmpty()){
+            min = Integer.MIN_VALUE;
+            return Integer.MIN_VALUE;
+        }
+        int ret = regularStack.pop();
+        if(ret == min) {
+            min = minStack.pop();
+        }
+
+        return ret;
+    }
+
+    public int min() {
+        return min;
+    }
+
+    public static void main(String args[]) {
+        PushPopAndMin i = new PushPopAndMin();
+
+        i.push(1);i.push(2);i.push(3);
+        System.err.println(i.min());
+        i.push(0);
+        System.err.println(i.min());
+        i.pop();
+        System.err.println(i.min());
+    }
+}
