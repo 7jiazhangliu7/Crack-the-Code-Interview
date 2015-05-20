@@ -1,0 +1,79 @@
+//http://www.geeksforgeeks.org/find-maximum-path-sum-two-leaves-binary-tree/
+
+import java.util.LinkedList;
+
+/**
+ * Created by Jiazhang_Liu on 5/20/2015.
+ */
+
+//You are given a binary tree in which each node contains a value. Design an algorithm
+//to print all paths which sum to a given value. The path does not need to start
+//or end at the root or a leaf.
+public class PathSum {
+    int min = Integer.MAX_VALUE;
+    public int findPath(Node root, Node leave1, Node leave2) {
+        if(leave1 == null || leave2 == null) return 0;
+
+        Node node = find(root, leave1, leave2);
+
+        return Math.max(min, helperL(node.left, leave1) + node.val + helperR(node.right, leave2));
+    }
+
+    public int helperL(Node n, Node leave) {
+        if(n == null) return 0;
+        if(n.val < min) min = n.val;
+        int left = Math.max(0,n.val + Math.max(0, helperR(n.left, leave)));
+
+        return left;
+    }
+
+    public int helperR(Node n, Node leave) {
+        if(n == null) return 0;
+        if(n.val < min) min = n.val;
+        int right = Math.max(0,n.val + Math.max(0, helperR(n.right, leave)));
+
+        return right;
+    }
+
+    public Node find(Node root, Node n1, Node n2) {
+        if(root == null || n1 == null || n2 == null) {
+            return null;
+        }
+        if(root == n1 || root == n2) return root;
+
+        Node left = find(root.left, n1, n2);
+        Node right = find(root.right, n1, n2);
+
+        if(left != null && right != null) return root;
+        return left == null ? right : left;
+    }
+
+    public static void main(String args[]) {
+        PathSum i = new PathSum();
+
+        Node root = new Node(-5);
+        Node n1 = new Node(-3);
+        Node n2 = new Node(-7);
+        Node n3 = new Node(-2);
+        Node n4 = new Node(-4);
+        Node n5 = new Node(-6);
+        Node n6 = new Node(-8);
+        Node n7 = new Node(-1);
+
+        root.left = n1;root.right = n2;
+        n1.left = n3; n1.right = n4;
+        n2.left = n5; n2.right = n6;
+        n3.left = n7;
+
+        System.err.println(i.findPath(root, n7, n4));
+    }
+
+    static class Node {
+        int val;
+        Node left;
+        Node right;
+        Node(int val) {
+            this.val = val;
+        }
+    }
+}
