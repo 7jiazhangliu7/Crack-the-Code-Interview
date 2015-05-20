@@ -1,0 +1,49 @@
+import java.util.List;
+
+/**
+ * Created by Jiazhang_Liu on 5/20/2015.
+ */
+public class isBTaBST {
+
+    public boolean isBST(Node root) {
+        if(root == null) return false;
+
+        return isBSTHelper(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    public boolean isBSTHelper(Node node, int min, int max) {
+        if(node == null) return true;
+        if(node.val < min || node.val > max) return false;
+
+        return isBSTHelper(node.left, min, node.val) && isBSTHelper(node.right, node.val, max);
+    }
+
+    public static void main(String args[]) {
+        isBTaBST i = new isBTaBST();
+
+        Node root = new Node(5);
+        Node n1 = new Node(3);
+        Node n2 = new Node(7);
+        Node n3 = new Node(2);
+        Node n4 = new Node(4);
+        Node n5 = new Node(6);
+        Node n6 = new Node(8);
+        Node n7 = new Node(1);
+
+        root.left = n1;root.right = n2;
+        n1.left = n3; n1.right = n4;
+        n2.left = n5; n2.right = n6;
+        n3.left = n7;
+
+        System.err.println(i.isBST(root));
+    }
+
+    static class Node {
+        int val;
+        Node left;
+        Node right;
+        Node(int val) {
+            this.val = val;
+        }
+    }
+}
