@@ -1,0 +1,72 @@
+/**
+ * Created by Jiazhang_Liu on 5/20/2015.
+ */
+
+//You have two very large binary trees: Tl, with millions of nodes, and T2, with
+//hundreds of nodes. Create an algorithm to decide ifT2 is a subtree ofTl.
+public class SubTree {
+    // O(m*n) time O(lgm + lgn) space where m,n are # of nodes in root1 and root2
+    public boolean isSubTree(Node root1, Node root2) {
+        if(root1 == null) return false;
+        if(root2 == null) return true;
+
+        return helper(root1, root2);
+    }
+
+    public boolean helper(Node n1, Node n2) {
+        if(n1 == null) return false;
+
+        if(n1.val == n2.val) {
+            return matchTree(n1, n2);
+        }
+
+        return helper(n1.left, n2) || helper(n1.right, n2);
+    }
+
+    public boolean matchTree(Node n1, Node n2) {
+        if(n1 == null && n2 == null) return true;
+        if(n1 == null || n2 == null) return false;
+
+        if(n1.val != n2.val) return false;
+
+        return matchTree(n1.left, n2.left) && matchTree(n1.right, n2.right);
+    }
+
+    public static void main(String args[]) {
+        SubTree i = new SubTree();
+
+        Node root = new Node(5);
+        Node n1 = new Node(3);
+        Node n2 = new Node(7);
+        Node n3 = new Node(2);
+        Node n4 = new Node(4);
+        Node n5 = new Node(6);
+        Node n6 = new Node(8);
+        Node n7 = new Node(1);
+
+        root.left = n1;root.right = n2;
+        n1.left = n3; n1.right = n4;
+        n2.left = n5; n2.right = n6;
+        n3.left = n7;
+
+        Node root1 = new Node(3);
+        Node n11 = new Node(2);
+        Node n12 = new Node(4);
+        Node n13 = new Node(1);
+        root1.left = n11;
+        root1.right = n12;
+        n11.left = n13;
+
+        System.err.println(i.isSubTree(root, root1));
+
+    }
+
+    static class Node {
+        int val;
+        Node left;
+        Node right;
+        Node(int val) {
+            this.val = val;
+        }
+    }
+}
