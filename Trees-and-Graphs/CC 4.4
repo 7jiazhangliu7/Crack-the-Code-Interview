@@ -1,0 +1,81 @@
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * Created by Jiazhang_Liu on 5/20/2015.
+ */
+public class LevelOrderTraversal {
+    public List<List<Node>> levelOrderTraversal (Node root) {
+        List<List<Node>> result = new LinkedList<List<Node>>();
+        List<Node> curRow = new LinkedList<>();
+        List<Node> nextRow = new LinkedList<>();
+        if(root == null) return result;
+
+        curRow.add(root);
+        //记得要new linkedlist， 不然给的是reference， 后面会修改之前结果！！！
+        result.add(new LinkedList<Node>(curRow));
+
+        while(!curRow.isEmpty()) {
+            Node n = curRow.remove(0);
+
+            if(n != null) {
+                if(n.left != null) {
+                    nextRow.add(n.left);
+                }
+
+                if(n.right != null) {
+                    nextRow.add(n.right);
+                }
+            }
+
+            if(curRow.isEmpty()) {
+            //记得要new linkedlist， 不然给的是reference， 后面会修改之前结果！！！
+                result.add(new LinkedList<Node>(nextRow));
+                curRow = nextRow;
+                nextRow = new LinkedList<Node>();
+            }
+        }
+
+        return result;
+    }
+
+    public void display(List<List<Node>> result) {
+        for(List<Node> l : result) {
+            for (Node n : l) {
+                System.err.print(n.val + " ");
+            }
+            System.err.println();
+        }
+    }
+
+    public static void main(String args[]) {
+        LevelOrderTraversal i = new LevelOrderTraversal();
+
+        Node root = new Node(5);
+        Node n1 = new Node(3);
+        Node n2 = new Node(7);
+        Node n3 = new Node(2);
+        Node n4 = new Node(4);
+        Node n5 = new Node(6);
+        Node n6 = new Node(8);
+        Node n7 = new Node(1);
+
+        root.left = n1;root.right = n2;
+        n1.left = n3; n1.right = n4;
+        n2.left = n5; n2.right = n6;
+        n3.left = n7;
+
+        List<List<Node>> result = i.levelOrderTraversal(root);
+
+        i.display(result);
+    }
+
+    static class Node {
+        int val;
+        Node left;
+        Node right;
+        Node(int val) {
+            this.val = val;
+        }
+    }
+}
