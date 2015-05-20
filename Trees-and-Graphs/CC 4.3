@@ -1,0 +1,53 @@
+/**
+ * Created by Jiazhang_Liu on 5/20/2015.
+ */
+
+//Given a sorted (increasing order) array with unique integer elements, write an algorithm
+//to create a binary search tree with minimal height
+public class GenerateBTFromArray {
+
+    public Node generate(int start, int end, int[] array) {
+        Node root = null;
+        if(array == null || array.length == 0 || start > end) {
+            return null;
+        }
+
+        int mid = (start+end) / 2;
+        root = new Node(array[mid]);
+
+        root.left = generate(start, mid - 1, array);
+        root.right = generate(mid + 1, end, array);
+
+        return root;
+    }
+
+    public void display(Node root) {
+        if(root == null) return;
+        display(root.left);
+        System.err.println(root.val);
+        display(root.right);
+    }
+
+    public static void main(String args[]) {
+        GenerateBTFromArray i = new GenerateBTFromArray();
+
+        int[] array = {1,2,3,4,5,6,7,8};
+
+        Node root = i.generate(0, array.length-1, array);
+
+        i.display(root);
+        System.err.println();
+        i.display(root.left);
+        System.err.println();
+        i.display(root.right);
+    }
+
+    class Node {
+        int val;
+        Node left;
+        Node right;
+        Node(int val) {
+            this.val = val;
+        }
+    }
+}
