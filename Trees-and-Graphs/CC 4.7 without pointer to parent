@@ -1,0 +1,52 @@
+/**
+ * Created by Jiazhang_Liu on 5/20/2015.
+ */
+
+//Design an algorithm and write code to find the first common ancestor of two nodes
+//in a binary tree. Avoid storing additional nodes in a data structure. NOTE: This is not
+//necessarily a binary search tree.
+
+public class FirstCommonAncestor {
+
+    public Node find(Node root, Node n1, Node n2) {
+        if(root == null || n1 == null || n2 == null) {
+            return null;
+        }
+        if(root == n1 || root == n2) return root;
+
+        Node left = find(root.left, n1, n2);
+        Node right = find(root.right, n1, n2);
+
+        if(left != null && right != null) return root;
+        return left == null ? right : left;
+    }
+
+    public static void main(String args[]) {
+        FirstCommonAncestor i = new FirstCommonAncestor();
+
+        Node root = new Node(5);
+        Node n1 = new Node(3);
+        Node n2 = new Node(7);
+        Node n3 = new Node(2);
+        Node n4 = new Node(4);
+        Node n5 = new Node(6);
+        Node n6 = new Node(8);
+        Node n7 = new Node(1);
+
+        root.left = n1;root.right = n2;
+        n1.left = n3; n1.right = n4;
+        n2.left = n5; n2.right = n6;
+        n3.left = n7;
+
+        System.err.println(i.find(root, n7,n2).val);
+    }
+
+    static class Node {
+        int val;
+        Node left;
+        Node right;
+        Node(int val) {
+            this.val = val;
+        }
+    }
+}
