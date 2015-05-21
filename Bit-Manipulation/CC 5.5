@@ -1,0 +1,28 @@
+/**
+ * Created by Jiazhang_Liu on 5/21/2015.
+ */
+
+//Write a function to determine the number of bits required to convert integer A to integer B.
+public class BitsNeededToConvertAtoB {
+
+    public int bitsNeeded(int A, int B) {
+        if(A == B) return 0;
+        int counter = 0;
+        for(int c = A ^ B; c > 0; c = c >> 1){
+            counter+= (c & 1);
+        }
+        return counter;
+    }
+
+    public static void main(String args[]) {
+        BitsNeededToConvertAtoB i = new BitsNeededToConvertAtoB();
+
+        int A = 64;
+        int B = 127;
+
+        System.err.println("A: " + Integer.toBinaryString(A));
+        System.err.println("B: " + Integer.toBinaryString(B));
+
+        System.err.println(i.bitsNeeded(A,B));
+    }
+}
