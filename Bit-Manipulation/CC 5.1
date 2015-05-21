@@ -1,0 +1,37 @@
+/**
+ * Created by Jiazhang_Liu on 5/21/2015.
+ */
+
+//You are given two 32-bit numbers, N andM, and two bit positions, i and j. Write a
+//method to insert M into Nsuch that M starts at bit j and ends at bit i.
+public class InsertMtoN {
+
+    public int updateBits (int N, int M, int i, int j) {
+        if(i > j) return Integer.MIN_VALUE;
+
+        int allOnes = ~0;
+
+        int left = allOnes << (j+1);
+
+        int right = (1 << i) - 1;
+
+        int mask = left | right;
+
+        int clearN = N & mask;
+
+        int shiftM = M << i;
+
+        return clearN | shiftM;
+    }
+
+    public static void main(String args[]) {
+        InsertMtoN i = new InsertMtoN();
+
+        int N = 345747573;
+        int M = 1241;
+
+        System.err.println("N: " + Integer.toBinaryString(N));
+        System.err.println("M: " + Integer.toBinaryString(M));
+        System.err.println(Integer.toBinaryString(i.updateBits(N,M,3,13)));
+    }
+}
