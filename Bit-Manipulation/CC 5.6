@@ -1,0 +1,19 @@
+/**
+ * Created by Jiazhang_Liu on 5/21/2015.
+ */
+
+//Write a program to swap odd and even bits in an integer with as few instructions as
+//possible (e.g., bit 0 and bit! are swapped, bit 2 and bit 3 are swapped, and so on).
+public class SwapBits {
+    public int swap(int num) {
+        //0xaaaaaaaa = 101010..101010     0x5555555555 = 01010101..010101
+        //拿到偶数位，往右移动一位，再or所有的基数位往左移动一位
+        return ( ((num & 0xaaaaaaaa) >> 1) | ((num & 0x55555555) << 1));
+    }
+
+    public static void main(String args[]) {
+        SwapBits i = new SwapBits();
+        int num = 12345;
+        System.err.println(Integer.toBinaryString(num) + " " + Integer.toBinaryString(i.swap(num)));
+    }
+}
