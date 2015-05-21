@@ -1,0 +1,16 @@
+/**
+ * Created by Jiazhang_Liu on 5/21/2015.
+ */
+public class PowerOfTwo {
+
+    public boolean powerOfTwo(int n) {
+        return ((n & (n-1)) == 0);
+    }
+
+    public static void main(String args[]) {
+        PowerOfTwo i = new PowerOfTwo();
+
+        System.err.println(i.powerOfTwo(64));
+        System.err.println(i.powerOfTwo(63));
+    }
+}
