@@ -1,0 +1,51 @@
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+
+/**
+ * Created by Jiazhang_Liu on 5/22/2015.
+ */
+
+//Write a method to sort an array of strings so that all the anagrams are next to each other.
+public class SortArrayOfAnagram {
+    HashMap<String, LinkedList<String>> hm = new HashMap<String, LinkedList<String>>();
+    public String[] sort(String[] input) {
+        if(input == null || input.length == 0) {
+            return input;
+        }
+
+        for(String s : input) {
+            String sorted = sortChar(s.toCharArray());
+            if(hm.containsKey(sorted)){
+                hm.get(sorted).add(s);
+            } else {
+                LinkedList<String> list = new LinkedList<String>();
+                list.add(s);
+                hm.put(sorted, list);
+            }
+        }
+        int index = 0;
+        for(String s : hm.keySet()) {
+            for(String s1 : hm.get(s)) {
+                input[index++] = s1;
+            }
+        }
+
+        return input;
+    }
+
+    public String sortChar(char[] c) {
+        Arrays.sort(c);
+        return new String(c);
+    }
+
+    public static void main(String args[]) {
+        SortArrayOfAnagram i = new SortArrayOfAnagram();
+        String[] input = {"cba", "drf", "acb", "frd", "rdf", "awe", "ewa", "abc"};
+        String[] str = i.sort(input);
+
+        for(String s : str) {
+            System.err.print(s + " ");
+        }
+    }
+}
