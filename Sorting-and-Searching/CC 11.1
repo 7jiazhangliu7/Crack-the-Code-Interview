@@ -1,0 +1,58 @@
+/**
+ * Created by Jiazhang_Liu on 5/22/2015.
+ */
+public class MergeBintoA {
+    int[] A, B;
+    int lengthA;
+    int lengthB;
+    public MergeBintoA(int[] A, int lengthA, int[] B, int lengthB) {
+        this.A = A;
+        this.B = B;
+        this.lengthA = lengthA;
+        this.lengthB = lengthB;
+    }
+    public void merge () {
+        if(A == null || B == null) return;
+
+        int cur = lengthA + lengthB - 1;
+
+
+        while(lengthA - 1 >= 0 && lengthB-1 >= 0) {
+            if(A[lengthA - 1] > B[lengthB - 1]) {
+                A[cur] = A[lengthA - 1];
+                lengthA--;
+            } else {
+                A[cur] = B[lengthB - 1];
+                lengthB--;
+            }
+
+            cur--;
+        }
+
+        if(lengthB == 0) {
+            return;
+        } else {
+            for(int i = lengthB; i >= 1; i--) {
+                A[cur--] = B[i-1];
+            }
+        }
+    }
+
+    public static void main(String args[]) {
+        int[] A = {1,3,5,7,9,0,0,0,0,0};
+        int[] B = {2,4,6,8};
+        MergeBintoA i = new MergeBintoA(A,5,B,4);
+        i.merge();
+        for(Integer a : A) {
+            System.err.print(a + " ");
+        }
+        System.err.println();
+        int[] C = {5,6,7,8,9,0,0,0,0,0};
+        int[] D = {1,2,3,4};
+        MergeBintoA i1 = new MergeBintoA(C,5,D,4);
+        i1.merge();
+        for(Integer a : C) {
+            System.err.print(a + " ");
+        }
+    }
+}
