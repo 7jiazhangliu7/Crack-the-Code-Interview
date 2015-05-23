@@ -1,0 +1,63 @@
+/**
+ * Created by jiazhangliu on 5/23/15.
+ */
+public class MagicIndex {
+
+    public int magicFastWithNoDuplicates(int[] array, int start, int end) {
+        if(end < start || start < 0 || end >= array.length) return -1;
+
+        int mid = (start+end)/2;
+
+        if(array[mid] == mid) {
+            return mid;
+        } else if(array[mid] > mid) {
+            return magicFastWithNoDuplicates(array, start, mid-1);
+        } else {
+            return magicFastWithNoDuplicates(array, mid + 1, end);
+        }
+    }
+
+    public int magicFastWithDuplicates(int[] array, int start, int end) {
+        if(end < start || start < 0 || end >= array.length) return -1;
+
+        int midIndex = (start+end)/2;
+        int midValue = array[midIndex];
+
+        if(midValue == midIndex) {
+            return midIndex;
+        }
+
+        int leftIndex = Math.min(midIndex-1, midValue);
+        int left = magicFastWithDuplicates(array, start, leftIndex);
+        if(left >= 0) return left;
+
+
+        int rightIndex = Math.max(midIndex+1, midValue);
+        int right = magicFastWithDuplicates(array, rightIndex, end);
+
+        return right;
+    }
+
+    public int magicFast(int[] array, boolean isDuplicate) {
+        if(array == null) return -1;
+
+        if(isDuplicate) {
+            return magicFastWithDuplicates(array, 0, array.length-1);
+        } else {
+            return magicFastWithNoDuplicates(array, 0, array.length-1);
+        }
+    }
+
+    public static void main(String args[]) {
+        MagicIndex i = new MagicIndex();
+
+        int[] array1 = {-40,-20,-1,1,2,3,5,7,9,12,13};
+        int[] array2 = {-10,-5,2,2,2,3,4,7,9,12,13};
+
+        int index1 = i.magicFast(array1, false);
+        System.err.println(index1 + " " + array1[index1]);
+
+        int index2 = i.magicFast(array2, true);
+        System.err.println(index2 + " " + array2[index2]);
+    }
+}
