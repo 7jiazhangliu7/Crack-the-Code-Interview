@@ -1,0 +1,47 @@
+/**
+ * Created by jiazhangliu on 5/23/15.
+ */
+public class ChildClimbing {
+
+    int[] dp;
+
+    public ChildClimbing(int n) {
+        if(n < 0) return;
+
+        dp = new int[n+1];
+    }
+
+    public int climb(int n) {
+        if(n < 0) return 0;
+        if(n == 0) return 1;
+        if(n == 1) return 1;
+        if(n == 2) return 2;
+        dp[0] = 1; dp[1] = 1; dp[2] = 2;
+
+        for(int i = 3; i < n+1; i++) {
+            dp[i] = dp[i-1] + dp[i-2] + dp[i-3];
+        }
+
+        return dp[n];
+    }
+
+    public int dp(int n, int[] map) {
+        if(n < 0) {
+            return 0;
+        } else if(n == 0) {
+            return 1;
+        } else if(map[n] > -1) {
+            return map[n];
+        } else {
+            map[n] = dp(n-1, map) + dp(n-2, map) + dp(n-3, map);
+            return map[n];
+        }
+    }
+
+    public static void main(String args[]) {
+        ChildClimbing i = new ChildClimbing(10);
+        int[] map = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+        System.err.println(i.climb(10));
+        System.err.println(i.dp(10, map));
+    }
+}
