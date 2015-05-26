@@ -1,0 +1,45 @@
+import java.util.LinkedList;
+
+/**
+ * Created by Jiazhang_Liu on 5/26/2015.
+ */
+public class CombinationOfParentheses {
+
+    public LinkedList<String> printParentheses(int n) {
+        LinkedList<String> result = new LinkedList<String>();
+        if(n <= 0) return result;
+
+        helper(n,n,result,new char[n*2], 0);
+
+        return result;
+    }
+
+    public void helper(int left, int right, LinkedList<String> result, char[] temp, int index) {
+        if(left < 0 || right < left) return;
+        if(left == 0 && right == 0) {
+            result.add(String.copyValueOf(temp));
+
+        } else {
+            if(left > 0) {
+                temp[index] = '(';
+                helper(left - 1, right, result, temp, index+1);
+            }
+
+            if(left < right) {
+                temp[index] = ')';
+                helper(left, right - 1, result, temp, index+1);
+            }
+        }
+    }
+
+    public static void main(String args[]) {
+        CombinationOfParentheses i = new CombinationOfParentheses();
+
+        LinkedList<String> result = i.printParentheses(5);
+
+        for(String s : result) {
+            System.err.println(s);
+        }
+    }
+
+}
